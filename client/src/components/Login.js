@@ -3,7 +3,7 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const Login = props => {
 
-  // console.log(`props -->`, props)
+  console.log(`props -->`, props)
 
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
@@ -30,13 +30,15 @@ const Login = props => {
 
     setLogin({...login, isFetching:true});
 
+    //**********/ Save the token to localStorage
+
         axiosWithAuth()
         .post('/api/login', login)
         .then(res => {
           //console.log({res})
           //res.data.payload - where the token is
           localStorage.setItem('token', res.data.payload)
-          props.history.push('/bubblepage')
+          props.history.push('/bubblepage') // this endpoint MUST match endpoint on ProtectedRoute in App.js
         })
         .catch(err => console.log(err))   
       }
